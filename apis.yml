@@ -22,9 +22,9 @@ apis:
     humanURL: https://genql.dev
     tags:
       - SDKs
-  - GraphQL
-  - TypeScript
-  - Code Generation
+      - GraphQL
+      - TypeScript
+      - Code Generation
     properties:
       - type: Documentation
         url: https://genql.dev/docs
