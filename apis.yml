@@ -12,7 +12,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/genql/refs/heads/main/apis.yml
 created: '2026-03-25'
-modified: '2026-03-25'
+modified: '2026-04-28'
 specificationVersion: '0.19'
 apis:
   - aid: genql:genql
@@ -32,6 +32,8 @@ apis:
         url: https://genql.dev/docs
       - type: GitHub Repository
         url: https://github.com/remorses/genql
+      - type: NPM Package
+        url: https://www.npmjs.com/package/@genql/cli
 common:
   - type: Website
     url: https://genql.dev
