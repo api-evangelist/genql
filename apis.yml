@@ -28,9 +28,9 @@ apis:
     properties:
       - type: Documentation
         url: https://genql.dev/docs
-      - type: Getting Started
+      - type: GettingStarted
         url: https://genql.dev/docs
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/remorses/genql
       - type: NPM Package
         url: https://www.npmjs.com/package/@genql/cli
@@ -39,7 +39,7 @@ common:
     url: https://genql.dev
   - type: Documentation
     url: https://genql.dev/docs
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/remorses/genql
 maintainers:
   - FN: Kin Lane
