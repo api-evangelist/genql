@@ -1,0 +1,335 @@
+"""
+Genql - TypeScript code generator and type-safe GraphQL client library.
+
+Genql does NOT expose a hosted GraphQL server. This schema documents the
+TypeScript/JavaScript API surface of the Genql runtime library
+(github.com/remorses/genql). It is expressed as GraphQL SDL for
+discoverability; the actual implementation types live in TypeScript.
+
+Source: https://github.com/remorses/genql/tree/master/cli/src/runtime
+"""
+
+# ---------------------------------------------------------------------------
+# Scalar aliases
+# ---------------------------------------------------------------------------
+
+"""
+Arbitrary JSON-compatible value (maps to TypeScript `any`).
+"""
+scalar JSON
+
+"""
+A HeadersInit value accepted by the Fetch API, or an async function that
+returns one. Maps to TypeScript `HeadersInit | (() => HeadersInit) | (() => Promise<HeadersInit>)`.
+"""
+scalar Headers
+
+# ---------------------------------------------------------------------------
+# CLI / code-generation configuration
+# ---------------------------------------------------------------------------
+
+"""
+Configuration accepted by `generate(config)` (the programmatic API of
+`@genql/cli`) and by the `genql` CLI tool.
+"""
+input Config {
+  """
+  Enable verbose output during code generation.
+  """
+  verbose: Boolean
+
+  """
+  Remote GraphQL endpoint from which to introspect and download the schema.
+  Mutually exclusive with `schema`.
+  """
+  endpoint: String
+
+  """
+  Use HTTP GET instead of POST when fetching the schema from `endpoint`.
+  CLI flag: --get
+  """
+  useGet: Boolean
+
+  """
+  Raw SDL string (or path to a .graphql file) to use as the schema source.
+  Mutually exclusive with `endpoint`.
+  CLI flag: --schema <path>
+  """
+  schema: String
+
+  """
+  Directory path where the generated client files will be written.
+  Required. CLI flag: --output / -o
+  """
+  output: String
+
+  """
+  HTTP headers to send when introspecting a remote endpoint.
+  CLI flag: -H 'Name: Value'
+  """
+  headers: JSON
+
+  """
+  Mapping of custom GraphQL scalar names to TypeScript type strings.
+  CLI flag: -S ScalarName:tsType
+  """
+  scalarTypes: JSON
+
+  """
+  Import path for a custom `fetch` implementation to embed in the
+  generated client (e.g. 'node-fetch').
+  """
+  fetchImport: String
+
+  """
+  Sort object properties in the generated code to reduce diff noise.
+  CLI flag: --sort
+  """
+  sortProperties: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Runtime client options
+# ---------------------------------------------------------------------------
+
+"""
+Options passed to `createClient()` in the generated client.
+All fields of the standard Fetch `RequestInit` (except `body` and
+`headers`) are also accepted and forwarded to every request.
+"""
+input ClientOptions {
+  """
+  URL of the target GraphQL endpoint.
+  Required unless a custom `fetcher` is provided.
+  """
+  url: String
+
+  """
+  Batch configuration. Pass `true` to use defaults, or supply a
+  `BatchOptions` object for fine-grained control.
+  """
+  batch: JSON
+
+  """
+  Provide a completely custom transport function that receives a
+  `GraphqlOperation` (or array of them) and returns the raw JSON response.
+  When set, `url` is ignored for network calls.
+  """
+  fetcher: String
+
+  """
+  Custom `fetch` implementation for environments where the global `fetch`
+  is not available (e.g. Node.js 16 and below).
+  """
+  fetch: String
+
+  """
+  HTTP headers forwarded to every request.
+  Accepts a plain object, or a sync/async function that returns one —
+  useful for dynamic auth tokens.
+  """
+  headers: Headers
+}
+
+"""
+Controls how the Genql runtime batches multiple in-flight queries into a
+single HTTP request.
+"""
+input BatchOptions {
+  """
+  Time window in milliseconds during which queries are collected before
+  being dispatched as a batch. Default: 6 ms.
+  """
+  batchInterval: Int
+
+  """
+  Maximum number of queries allowed in a single batch request.
+  0 means unlimited. Default: 0.
+  """
+  maxBatchSize: Int
+}
+
+# ---------------------------------------------------------------------------
+# Runtime transport types
+# ---------------------------------------------------------------------------
+
+"""
+A GraphQL operation object sent over the wire by the generated client.
+"""
+type GraphqlOperation {
+  """
+  The GraphQL query / mutation / subscription string, with all field
+  selections and fragment definitions inlined.
+  """
+  query: String!
+
+  """
+  Variable values extracted from `__args` field selectors.
+  """
+  variables: JSON
+
+  """
+  Optional operation name derived from the `__name` field selector.
+  """
+  operationName: String
+}
+
+"""
+Standard GraphQL execution result envelope returned by the server.
+"""
+type ExecutionResult {
+  """
+  Partial or complete response data from the server.
+  """
+  data: JSON
+
+  """
+  Non-null when the server reports one or more GraphQL errors.
+  """
+  errors: [GraphqlErrorType!]
+}
+
+"""
+A single GraphQL error object as defined by the GraphQL specification.
+"""
+type GraphqlErrorType {
+  """
+  Human-readable description of the error.
+  """
+  message: String!
+
+  """
+  Source locations in the query document where the error occurred.
+  """
+  locations: [ErrorLocation!]
+
+  """
+  Field path within the response data to which the error belongs.
+  """
+  path: [String!]
+
+  """
+  Additional implementation-defined metadata about the error.
+  """
+  extensions: JSON
+}
+
+"""
+Line/column pointer into a GraphQL document.
+"""
+type ErrorLocation {
+  line: Int!
+  column: Int!
+}
+
+# ---------------------------------------------------------------------------
+# Error type
+# ---------------------------------------------------------------------------
+
+"""
+Thrown by the generated client when the server returns `errors` in the
+GraphQL response. Extends the JavaScript `Error` class.
+"""
+type GenqlError {
+  """
+  Concatenated error messages, newline-separated.
+  """
+  message: String!
+
+  """
+  Full list of GraphQL errors returned by the server.
+  """
+  errors: [GraphqlErrorType!]!
+
+  """
+  Partial data the server may have returned alongside the errors.
+  """
+  data: JSON
+}
+
+# ---------------------------------------------------------------------------
+# Internal type-map types (used by the code generator output)
+# ---------------------------------------------------------------------------
+
+"""
+A field entry in a linked type map, carrying a reference to the field's
+type and optional argument descriptors.
+"""
+type LinkedField {
+  """
+  The type to which this field resolves.
+  """
+  type: LinkedType!
+
+  """
+  Argument definitions keyed by argument name.
+  """
+  args: JSON
+}
+
+"""
+A resolved GraphQL object type as stored in the generated type map.
+Used internally by `generateGraphqlOperation` to validate field paths
+and argument types at runtime.
+"""
+type LinkedType {
+  """
+  GraphQL type name (e.g. "Query", "User").
+  """
+  name: String!
+
+  """
+  Nested field map, absent for leaf scalar types.
+  """
+  fields: JSON
+
+  """
+  Names of scalar fields on this type, used when `__scalar: true` is
+  requested to expand all scalar selections automatically.
+  """
+  scalar: [String!]
+}
+
+# ---------------------------------------------------------------------------
+# Root types (documentation scaffold only — Genql has no live server)
+# ---------------------------------------------------------------------------
+
+"""
+Documentation-only root Query type. Genql itself has no live GraphQL
+server; this type exists solely to make the SDL valid.
+"""
+type Query {
+  """
+  Returns metadata about the Genql library itself (documentation stub).
+  """
+  genql: GenqlInfo
+}
+
+"""
+Static metadata about the Genql library.
+"""
+type GenqlInfo {
+  """
+  Current release version of @genql/cli.
+  """
+  version: String!
+
+  """
+  Short description of the library.
+  """
+  description: String!
+
+  """
+  Link to the official documentation.
+  """
+  docsUrl: String!
+
+  """
+  GitHub repository URL.
+  """
+  githubUrl: String!
+}
+
+schema {
+  query: Query
+}
