@@ -1,8 +1,8 @@
 # Genql
 
-Genql is a type-safe GraphQL client generator that produces fully typed query builders from GraphQL schemas for TypeScript and JavaScript with autocompletion support.
+TypeScript code generator and GraphQL client that generates a fully-typed client from any GraphQL schema, supporting batched queries, retries, and works with any HTTP endpoint.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/genql/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/genql/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/genql/refs/heads/main/apis.yml)
 
 ## Scope
 
@@ -10,30 +10,32 @@ Genql is a type-safe GraphQL client generator that produces fully typed query bu
 
 ## Tags
 
-- Code Generation
 - GraphQL
-- SDKs
 - TypeScript
+- Code Generation
+- SDK
+- Developer Tools
 
 ## Timestamps
 
 - **Created:** 2026-03-25
-- **Modified:** 2026-04-28
+- **Modified:** 2026-06-14
 
 ## APIs
 
-### Genql
+### Genql GraphQL API
 
-Genql is a type-safe GraphQL client generator that produces fully typed query builders from GraphQL schemas for TypeScript and JavaScript with autocompletion support.
+Fully-typed TypeScript client generated from any GraphQL schema, enabling type-safe query building with IDE auto-completion, batching support, subscriptions, and zero runtime dependencies across browser, Node.js, Deno, Cloudflare Workers, and Bun environments.
 
-**Human URL:** [https://genql.dev](https://genql.dev)
+**Human URL:** [https://genql.dev/docs](https://genql.dev/docs)
 
 #### Tags
 
-- Code Generation
 - GraphQL
-- SDKs
 - TypeScript
+- Code Generation
+- SDK
+- Developer Tools
 
 #### Properties
 
@@ -47,6 +49,10 @@ Genql is a type-safe GraphQL client generator that produces fully typed query bu
 - [Website](https://genql.dev)
 - [Documentation](https://genql.dev/docs)
 - [GitHub Organization](https://github.com/remorses/genql)
+- [Changelog](https://changelog.genql.dev)
+- [Plans](plans/genql-plans.md)
+- [Rate Limits](rate-limits/genql-rate-limits.md)
+- [FinOps](finops/genql-finops.md)
 
 ## Maintainers
 

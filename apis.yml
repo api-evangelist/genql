@@ -1,30 +1,35 @@
 aid: genql
 name: Genql
-description: >-
-  Genql is a type-safe GraphQL client generator that produces fully typed query builders from GraphQL schemas for TypeScript and JavaScript with autocompletion support.
+description: "TypeScript code generator and GraphQL client that generates a fully-typed\
+  \ client from any GraphQL schema, supporting batched queries, retries, and works\
+  \ with any HTTP endpoint."
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- Code Generation
 - GraphQL
-- SDKs
 - TypeScript
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/genql/refs/heads/main/apis.yml
+- Code Generation
+- SDK
+- Developer Tools
+url: https://raw.githubusercontent.com/api-evangelist/genql/refs/heads/main/apis.yml
 created: '2026-03-25'
-modified: '2026-04-28'
+modified: '2026-06-14'
 specificationVersion: '0.19'
 apis:
-- aid: genql:genql
-  name: Genql
-  description: >-
-    Genql is a type-safe GraphQL client generator that produces fully typed query builders from GraphQL schemas for TypeScript and JavaScript with autocompletion support.
-  humanURL: https://genql.dev
+- aid: genql:graphql-api
+  name: Genql GraphQL API
+  description: "Fully-typed TypeScript client generated from any GraphQL schema,\
+    \ enabling type-safe query building with IDE auto-completion, batching support,\
+    \ subscriptions, and zero runtime dependencies across browser, Node.js, Deno,\
+    \ Cloudflare Workers, and Bun environments."
+  humanURL: https://genql.dev/docs
+  baseURL: https://genql.dev/
   tags:
-  - Code Generation
   - GraphQL
-  - SDKs
   - TypeScript
+  - Code Generation
+  - SDK
+  - Developer Tools
   properties:
   - type: Documentation
     url: https://genql.dev/docs
@@ -43,6 +48,14 @@ common:
   url: https://genql.dev/docs
 - type: GitHubOrganization
   url: https://github.com/remorses/genql
+- type: Changelog
+  url: https://changelog.genql.dev
+- type: Plans
+  url: plans/genql-plans.md
+- type: RateLimits
+  url: rate-limits/genql-rate-limits.md
+- type: FinOps
+  url: finops/genql-finops.md
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
