@@ -48,7 +48,7 @@ common:
   url: https://genql.dev/docs
 - type: GitHubOrganization
   url: https://github.com/remorses/genql
-- type: Changelog
+- type: ChangeLog
   url: https://changelog.genql.dev
 - type: Plans
   url: plans/genql-plans.md
