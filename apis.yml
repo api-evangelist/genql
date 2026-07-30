@@ -4,7 +4,19 @@ description: "TypeScript code generator and GraphQL client that generates a full
   \ client from any GraphQL schema, supporting batched queries, retries, and works\
   \ with any HTTP endpoint."
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/genql.png
 tags:
 - GraphQL
 - TypeScript
