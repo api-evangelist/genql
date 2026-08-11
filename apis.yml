@@ -54,6 +54,15 @@ apis:
   - url: graphql/genql-graphql.md
     type: GraphQL
 common:
+- type: IssueTracker
+  url: https://github.com/remorses/genql/issues
+- type: Releases
+  url: https://github.com/remorses/genql/releases
+- type: CodeOfConduct
+  url: https://github.com/remorses/genql/blob/master/CODE_OF_CONDUCT.md
+- type: License
+  name: MIT
+  url: https://github.com/remorses/genql/blob/master/LICENSE
 - type: DomainSecurity
   url: security/genql-domain-security.yml
 - type: Website
