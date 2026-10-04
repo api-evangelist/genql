@@ -48,7 +48,6 @@ apis:
     \ subscriptions, and zero runtime dependencies across browser, Node.js, Deno,\
     \ Cloudflare Workers, and Bun environments."
   humanURL: https://genql.dev/docs
-  baseURL: https://genql.dev/
   tags:
   - GraphQL
   - TypeScript
